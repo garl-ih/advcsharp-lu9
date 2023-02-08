@@ -230,3 +230,9 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+/ClientApp/src/components/AddGameForm/AddGameForm.jsx
+/ClientApp/src/components/AddGameForm/AddGameForm.css
+/ClientApp/src/components/Button/Button.css
+/ClientApp/src/components/GameCard/GameCard.css
+/ClientApp/src/components/GamesContainer/GamesContainer.css
+/ClientApp/src/components/NavMenu/NavMenu.css
