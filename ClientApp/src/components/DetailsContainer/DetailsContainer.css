@@ -1,5 +1,6 @@
-.gamecard {
+﻿.details-container {
   outline: 1px solid;
   padding: 10px;
   margin: 10px;
+  min-width: 50%;
 }
