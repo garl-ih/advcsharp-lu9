@@ -1,0 +1,11 @@
+﻿.details-page-sec1 {
+  outline: 1px solid red;
+  display: flex;
+  justify-content: space-between;
+}
+
+.details-card {
+  outline: 1px solid;
+  height: 200px;
+  margin: 10px;
+}
