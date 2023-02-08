@@ -1,20 +1,20 @@
-import { Home } from "./pages/Home";
-import { DetailsPage } from "./pages/DetailsPage";
-import { AddPage } from "./pages/AddPage";
+import { Home } from './pages/Home'
+import { DetailsPage } from './pages/DetailsPage/DetailsPage'
+import { AddPage } from './pages/AddPage/AddPage'
 
 const AppRoutes = [
   {
     index: true,
-    element: <Home />
+    element: <Home />,
   },
   {
     path: '/details/:id',
-    element: <DetailsPage />
+    element: <DetailsPage />,
   },
   {
     path: '/add',
-    element: <AddPage />
-  }
-];
+    element: <AddPage />,
+  },
+]
 
-export default AppRoutes;
+export default AppRoutes
