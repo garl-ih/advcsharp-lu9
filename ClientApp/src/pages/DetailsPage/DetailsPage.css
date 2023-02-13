@@ -3,7 +3,9 @@
   display: flex;
   justify-content: space-between;
 }
-
+body {
+    background-color: #597272;
+}
 .details-card {
   outline: 1px solid;
   height: 200px;
