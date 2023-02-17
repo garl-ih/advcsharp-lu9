@@ -1,4 +1,5 @@
-﻿using groupproject.Data;
+﻿using GroupProject.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace groupproject.Models
 {
@@ -11,12 +12,12 @@ namespace groupproject.Models
                     DbContextOptions<MerchContext>>()))
             {
                 // Look for any movies.
-                if (context.merch.Any())
+                if (context.Merchy.Any())
                 {
                     return;   // DB has been seeded
                 }
 
-                context.merch.AddRange(
+                context.Merchy.AddRange(
                     new Merch
                     {
                         itemName = "Hat",
