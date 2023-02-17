@@ -1,4 +1,4 @@
-namespace groupproject
+namespace GroupProject
 {
     public class WeatherForecast
     {

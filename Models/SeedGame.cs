@@ -1,6 +1,8 @@
-﻿using System;
+﻿using GroupProject.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
 
-namespace groupproject.Models
+namespace GroupProject.Models
 {
     public class SeedGame
     {
@@ -11,16 +13,16 @@ namespace groupproject.Models
                     DbContextOptions<GameContext>>()))
             {
                 // Look for any movies.
-                if (context.game.Any())
+                if (context.Games.Any())
                 {
                     return;   // DB has been seeded
                 }
 
-                context.game.AddRange(
+                context.Games.AddRange(
                     new Game
                     {
                         name = "Halo",
-                        releaseDate = DateTime.Parse("2000-01-01"),                        
+                        releaseDate = DateTime.Parse("2000-01-01"),
                         price = 60.00,
                         revenue = 9999.00,
                         numberOfPlayers = 9999999,
