@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react'
 import { useNavigate } from 'react-router-dom'
 import GameCard from '../GameCard/GameCard';
-import './GamesContainer.css'
+//import './GamesContainer.css'
 
 
 const games = [
