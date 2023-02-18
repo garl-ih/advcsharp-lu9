@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import './GameCard.css'
+//import './GameCard.css'
 
 /* 
   This component is used to represent a video game

@@ -13,7 +13,7 @@ namespace groupproject.Data
         {
         }
 
-        public DbSet<groupproject.Models.Merch> Merch { get; set; } = default!;
+        public DbSet<GroupProject.Models.Merch> Merch { get; set; } = default!;
     }
 }
 
