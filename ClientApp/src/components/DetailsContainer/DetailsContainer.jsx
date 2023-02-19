@@ -5,7 +5,7 @@ export const DetailsContainer = ({ game }) => {
   const createDetails = () => {
     let keys = Object.keys(game)
     return keys.map((key) => {
-      if (key === 'platforms') return
+        if (key === 'platforms') return;
       return (
         <div className='game-detail'>
           <strong>{key}</strong>
@@ -13,11 +13,11 @@ export const DetailsContainer = ({ game }) => {
         </div>
       )
     })
-    }
+  }
 
     const handleClick = async () => {
         console.log("loading")
-        event.preventDefault();
+        //event.preventDefault();
         let request = await fetch("https://localhost:7269/api/Games/", {
             method: "GET",
             mode: "no-cors",
