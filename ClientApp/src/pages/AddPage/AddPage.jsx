@@ -4,7 +4,7 @@ import React from 'react'
 export const AddPage = () => {
   return (
     <>
-      
+      <input type="text" placeholder="id"/>
     </>
   )
 }
