@@ -1,6 +1,7 @@
 import { Home } from './pages/Home'
 import { DetailsPage } from './pages/DetailsPage/DetailsPage'
 import { AddPage } from './pages/AddPage/AddPage'
+import { AddMPage } from './pages/AddMPage/AddMPage'
 
 const AppRoutes = [
   {
@@ -14,6 +15,10 @@ const AppRoutes = [
   {
     path: '/add',
     element: <AddPage />,
+  },
+  {
+    path: '/addM',
+    element: <AddMPage />,
   },
 ]
 

@@ -17,104 +17,129 @@ const games = [
     revenue: '$2,000,000.00',
     numberOfPlayers: '500,000',
     platforms: [],
-  },
-  {
-    id: '4c29',
-    name: 'Video Game 2',
-    releaseData: '1/22/2001',
-    price: 20.0,
-    revenue: '$2,000,000.00',
-    numberOfPlayers: '500,000',
-    platforms: [],
-  },
-  {
-    id: '8523-4032-11024829',
-    name: 'Video Game 3',
-    releaseData: '5/15/2001',
-    price: 20.0,
-    revenue: '$2,000,000.00',
-    numberOfPlayers: '500,000',
-    platforms: [],
-  },
-  {
-    id: '-4b7e-ba31-1484c29',
-    name: 'Video Game 4',
-    releaseData: '6/16/2001',
-    price: 20.0,
-    revenue: '$2,000,000.00',
-    numberOfPlayers: '500,000',
-    platforms: [],
-  },
-  {
-    id: '8522f102484c29',
-    name: 'Video Game 5',
-    releaseData: '4/20/2001',
-    price: 20.0,
-    revenue: '$2,000,000.00',
-    numberOfPlayers: '500,000',
-    platforms: [],
-  },
-  {
-    id: '2f7f779',
-    name: 'Video Game 6',
-    releaseData: '7/22/2001',
-    price: 20.0,
-    revenue: '$2,000,000.00',
-    numberOfPlayers: '500,000',
-    platforms: [],
-  },
-  {
-    id: 'a7b15b94-b416-4bb7-9475-ff87a22f7f77 ',
-    name: 'Video Game 7',
-    releaseData: '7/22/2001',
-    price: 20.0,
-    revenue: '$2,000,000.00',
-    numberOfPlayers: '500,000',
-    platforms: [],
-  },
-  {
-    id: 'e434ba69-194e-4e3c-abbc-d6ff72388a39',
-    name: 'Video Game 8',
-    releaseDate: '7/22/2001',
-    price: 20.0,
-    revenue: '$2,000,000.00',
-    numberOfPlayers: '500,000',
-    platforms: [],
-  },
+  }
 ]
 
 export const DetailsPage = () => {
-  const [game, setGame] = useState(0)
   const params = useParams()
-  //use the params.id to get the data
+  //use the params.id to get the url data
 
-  function handleNextGame() {
-    if (game === games.length - 1) {
-      setGame(0)
-    } else {
-      setGame(game + 1)
+  const [gameState, setGame] = useState({});
+
+    useEffect(()=>{ // useEffect says "I want to run this function after the page loads..."
+        getGameFromServer()
+    }, []);
+
+    const getGameFromServer = async () => {
+        const resp = await fetch("https://localhost:7269/api/Games");
+        const done = await resp.json();
+        const done2 = done.filter(obj =>{
+          //console.log(obj.id);
+          return obj.id == params.id;
+        });
+        setGame(done2[0]);
     }
-  }
 
-  function handlePrevGame() {
-    if (game === 0) {
-      setGame(games.length - 1)
-    } else {
-      setGame(game - 1)
+
+    const editGame = async () => {
+      //let x = document.getElementById("id").value
+      let x = params.id;
+      let name = document.getElementById("name").value
+      let price = document.getElementById("price").value
+      let revenue = document.getElementById("revenue").value
+      let numberOfPlayers = document.getElementById("numberOfPlayers").value
+      let platforms = document.getElementById("platforms").value
+      let releaseDate = document.getElementById("releaseDate").value
+
+    //console.log(releaseDate);
+
+      let data = {
+        id: x,
+        name: name,
+        price: price,
+        revenue: revenue,
+        numberOfPlayers: numberOfPlayers,
+        platforms: platforms,
+        releaseDate: releaseDate
+      }
+
+      const resp = await fetch("https://localhost:7269/api/Games",
+      {
+        method: "PUT",
+        headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+        body: JSON.stringify(data)
+      })
+      
+      const status = await resp.json()
+  
+      if(status.status == "Okay"){
+        document.getElementById("resultMessage").value = "Game Uploaded";
+        alert("Game Updated");
+      }else{
+        document.getElementById("resultMessage").value = "Something Bad happened!";
+        alert("Fail, please reload page");
+      }
+
+
+
+
+
+
+
+
     }
-  }
-
-  const data = games[game]
+  //console.log(game);
 
   return (
     <div>
       <p>You clicked: {params.id}</p>
       <section className='details-page-sec1'>
         <div className='details-card'>Bigger Game Card Here</div>
-        <DetailsContainer game={data} />
+          <section className='details-container'>
+          <div className='game-detail'>
+            <strong>Id</strong>
+            <p>{gameState.id}</p>
+          </div>
+
+          <div className='game-detail'>
+            <strong>Name: </strong>
+            <input type="text" name="name" id="name" required placeholder={gameState.name}/>
+          </div>
+
+          <div className='game-detail'>
+            <strong>Price: </strong>
+            <input type="number" name="price" id="price" required placeholder={gameState.price}/>
+          </div>
+
+          <div className='game-detail'>
+            <strong>Revenue: </strong>
+            
+            <input type="number" name="revenue" id="revenue" required placeholder={gameState.revenue}/>
+          </div>
+
+          <div className='game-detail'>
+            <strong>Number of Players: </strong>
+            
+            <input type="number" name="numberOfPlayers" id="numberOfPlayers" required placeholder={gameState.numberOfPlayers}/>
+          </div>
+
+          <div className='game-detail'>
+            <strong>Platforms: </strong>
+            
+            <input type="text" name="platforms" id="platforms" required placeholder={gameState.platforms}/>
+          </div>
+
+          <div className='game-detail'>
+            <strong>Release Date: </strong>
+            
+            <input type="date" name="releaseDate" id="releaseDate" required placeholder={gameState.releaseData}/>
+          </div>
+
+          <br/><br/>
+          <button id="addBtn" onClick={editGame}>Update Game</button><p id="resultMessage"></p>
+
+        </section>
       </section>
-      <Button onClick={handlePrevGame} text='Prev game' />
-      <Button onClick={handleNextGame} text='Next game' />
     </div>
   )
 }
