@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GroupProject.Models;
+using GroupProject.Database;
 
 namespace GroupProject.Controllers
 {
@@ -13,109 +14,82 @@ namespace GroupProject.Controllers
     [ApiController]
     public class MerchesController : ControllerBase
     {
-        private readonly MerchContext _context;
-
-        public MerchesController(MerchContext context)
-        {
-            _context = context;
-        }
-
         // GET: api/Merches
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Merch>>> GetMerchy()
+        public List<Merch> GetMerches()
         {
-            return await _context.Merchy.ToListAsync();
+            MerchDatabase mdb = new MerchDatabase();
+
+            return mdb.GetMerches();
         }
 
-        // GET: api/Merches/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Merch>> GetMerch(string id)
-        {
-            var merch = await _context.Merchy.FindAsync(id);
 
-            if (merch == null)
-            {
-                return NotFound();
-            }
-
-            return merch;
-        }
 
         // PUT: api/Merches/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutMerch(string id, Merch merch)
+        [HttpPut]
+        public Resp PutMerch(Merch merch)
         {
-            if (id != merch.itemName)
+            Resp resp = new Resp();
+
+            MerchDatabase mdb = new MerchDatabase();
+
+            if (mdb.updateMerch(merch))
             {
-                return BadRequest();
+                resp.status = "Okay";
+                resp.message = "Merch Updated in database";
+            }
+            else
+            {
+                resp.status = "Error";
+                resp.message = "Something went wrong";
             }
 
-            _context.Entry(merch).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MerchExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return resp;
         }
 
         // POST: api/Merches
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Merch>> PostMerch(Merch merch)
+        public Resp PostMerch(Merch merch)
         {
-            _context.Merchy.Add(merch);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (MerchExists(merch.itemName))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return CreatedAtAction("GetMerch", new { id = merch.itemName }, merch);
+            Resp resp = new Resp();
+
+            MerchDatabase mdb = new MerchDatabase();
+
+            if (mdb.addMerch(merch))
+            {
+                resp.status = "Okay";
+                resp.message = "Merch added to database";
+            }
+            else
+            {
+                resp.status = "Error";
+                resp.message = "Something went wrong";
+            }
+            return resp;
         }
 
         // DELETE: api/Merches/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMerch(string id)
+        [HttpDelete]
+        public Resp DeleteMerch(int id)
         {
-            var merch = await _context.Merchy.FindAsync(id);
-            if (merch == null)
+            Resp resp = new Resp();
+
+            MerchDatabase mdb = new MerchDatabase();
+
+            if (mdb.deleteMerch(id))
             {
-                return NotFound();
+                resp.status = "Okay";
+                resp.message = "Merch removed from database";
             }
-
-            _context.Merchy.Remove(merch);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool MerchExists(string id)
-        {
-            return _context.Merchy.Any(e => e.itemName == id);
+            else
+            {
+                resp.status = "Error";
+                resp.message = "Something went wrong";
+            }
+            return resp;
         }
     }
 }

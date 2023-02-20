@@ -4,7 +4,8 @@ namespace GroupProject.Models
 {
     public class Merch
     {
-        [Key]
+        
+        public int Id { get; set; }
         public String itemName { get; set; }
         public String itemDescription { get; set; }
         public int itemInStock { get; set; }

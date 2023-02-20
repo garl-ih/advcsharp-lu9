@@ -4,7 +4,8 @@ namespace GroupProject.Models
 {
     public class Game
     {
-        [Key]
+        public int id { get; set; }
+        
         public String name { get; set; }
         public double price { get; set; }
         public double revenue { get; set; }

@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GroupProject.Models;
+using System.ComponentModel;
+using GroupProject.Database;
 
 namespace GroupProject.Controllers
 {
@@ -22,100 +24,82 @@ namespace GroupProject.Controllers
 
         // GET: api/Games
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Game>>> GetGames()
+        public List<Game> GetGames()
         {
-            return await _context.Games.ToListAsync();
+            GamesDatabase gdb = new GamesDatabase();
+
+            return gdb.GetGames();
         }
 
-        // GET: api/Games/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Game>> GetGame(string id)
-        {
-            var game = await _context.Games.FindAsync(id);
-
-            if (game == null)
-            {
-                return NotFound();
-            }
-
-            return game;
-        }
+        
 
         // PUT: api/Games/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutGame(string id, Game game)
+        [HttpPut]
+        public Resp PutGame(Game game)
         {
-            if (id != game.name)
+            Resp resp = new Resp();
+
+            GamesDatabase gdb = new GamesDatabase();
+
+            if (gdb.updateGame(game))
             {
-                return BadRequest();
+                resp.status = "Okay";
+                resp.message = "Game Updated in database";
+            }
+            else
+            {
+                resp.status = "Error";
+                resp.message = "Something went wrong";
             }
 
-            _context.Entry(game).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!GameExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return resp;
         }
 
         // POST: api/Games
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Game>> PostGame(Game game)
+        public Resp PostGame(Game game)
         {
-            _context.Games.Add(game);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (GameExists(game.name))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return CreatedAtAction("GetGame", new { id = game.name }, game);
+            Resp resp = new Resp();
+
+            GamesDatabase gdb = new GamesDatabase();
+            
+            if (gdb.addGame(game))
+            {
+                resp.status = "Okay";
+                resp.message = "Game added to database";
+            }
+            else
+            {
+                resp.status = "Error";
+                resp.message = "Something went wrong";
+            }
+            return resp;
         }
 
         // DELETE: api/Games/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteGame(string id)
+        [HttpDelete]
+        public Resp DeleteGame(int id)
         {
-            var game = await _context.Games.FindAsync(id);
-            if (game == null)
+            Resp resp = new Resp();
+
+            GamesDatabase gdb = new GamesDatabase();
+
+            if (gdb.deleteGame(id))
             {
-                return NotFound();
+                resp.status = "Okay";
+                resp.message = "Game removed from database";
             }
-
-            _context.Games.Remove(game);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            else
+            {
+                resp.status = "Error";
+                resp.message = "Something went wrong";
+            }
+            return resp;
         }
 
-        private bool GameExists(string id)
-        {
-            return _context.Games.Any(e => e.name == id);
-        }
+        
     }
 }
