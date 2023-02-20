@@ -31,7 +31,7 @@ const GameCard = ({ name, id, onClick, gameState, gameSetState }) => {
   }
 
   return (
-    <div className='gamecard' style={{display:"inline"}}>
+    <div className='gamecard' style={{display:"flex", margin:"6px"}}>
       <p  onClick={handleRoutes} style={{display:"inline", paddingRight:"15px"}}>{name}</p> <i className="fa-sharp fa-solid fa-trash-can" onClick={dropMe}></i>
       <br/>
     </div>

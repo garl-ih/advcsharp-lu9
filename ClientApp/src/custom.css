@@ -12,3 +12,55 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
+nav.navbar{
+    background-color: #7796a4;
+    
+}
+
+body{
+    background-color: #4f646c;
+}
+
+
+
+.gamecard{
+    padding-top: 10px;
+    width: auto;
+    border: solid;
+    border-width: 1px;
+    background-color: #308926;
+    justify-content: center;
+}
+.gamecard:hover {
+    cursor: pointer;
+    outline-style: solid;
+    outline-color: #7796a4;
+}
+.fa-sharp:hover{
+    cursor: grabbing;
+}
+
+.gamescontainer{
+    height: auto;
+    padding: 25px;
+    border: solid;
+    border-width: thin;
+    columns: auto;
+    column-fill: auto;
+    padding-bottom: 40px;
+}
+
+div#game-container {
+    border-style: solid;
+    padding: 12px;
+    background-color: #7a9382d1;
+}
+div#merch-container {
+    border-style: solid;
+    padding: 12px;
+    background-color: #7a9382d1;
+}
+input{
+    width: 300px;
+}

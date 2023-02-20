@@ -11,3 +11,15 @@ body {
   height: 200px;
   margin: 10px;
 }
+
+.details-page-sec1{
+    background-color: #7a9382d1;
+}
+
+.details-card{
+    padding: 5px;
+}
+
+.game-detail{
+    margin: 4px;
+}

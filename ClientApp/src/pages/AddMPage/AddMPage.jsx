@@ -14,7 +14,7 @@ export const AddMPage = () => {
   
   
   return (
-    <>
+    <div id="merch-container">
       <label htmlFor="id">ID</label><br/>
       <input type="number" name="id" id="id" required/>
       <br/><br/>
@@ -38,6 +38,6 @@ export const AddMPage = () => {
       <br/><br/>
       <button onClick={addMerch}>Add Game</button><p id="resultMessage"></p>
 
-    </>
+    </div>
   )
 }

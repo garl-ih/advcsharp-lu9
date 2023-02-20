@@ -51,7 +51,7 @@ export const AddPage = () => {
   
   
   return (
-    <>
+    <div id="game-container">
       <label htmlFor="id">ID</label><br/>
       <input type="number" name="id" id="id" defaultValue="53" required/>
       <br/><br/>
@@ -75,6 +75,6 @@ export const AddPage = () => {
       <br/><br/>
       <button id="addBtn" onClick={addGame}>Add Game</button><p id="resultMessage"></p>
 
-    </>
+    </div>
   )
 }
